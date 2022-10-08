@@ -1,0 +1,125 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Product-Image-Analysis",
+    "description": "### _Product Backlog_\n1. _Simple GUI for demonstration purposes_\n2. _Ask for a prediction for a single product_\n3. _Interpret detailed categories and names into simplified lables_\n4. _Improve robustness of algorithm in terms of error handling_\n5. _Migrate locally hosted server to cloud hosted server_\n6. _Streamline data process by removeing redundant database_\n",
+    "version": "0.2"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8000/api"
+    }
+  ],
+  "paths": {
+    "/add": {
+      "post": {
+        "operationId": "add_create",
+        "description": "Downloads images to a local directory and labels them with a generated JSONL file.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "summary": "Downloads images and JSONL file.",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "add"
+        ]
+      },
+      "parameters": []
+    },
+    "/createdata": {
+      "put": {
+        "operationId": "createdata_update",
+        "description": "Uploads images to the dataset from the google cloud storage bucket",
+        "summary": "Bucket to dataset.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "createdata"
+        ]
+      },
+      "parameters": []
+    },
+    "/query/{image_url}": {
+      "get": {
+        "operationId": "query_read",
+        "parameters": [
+          {
+            "name": "image_url",
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "required": true
+          }
+        ],
+        "description": "Takes image url and gives predictions back.",
+        "summary": "Takes UTR, gives predictions",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "query"
+        ]
+      }
+    },
+    "/upload": {
+      "post": {
+        "operationId": "upload_create",
+        "description": "Takes images from local directory and uploads them to the cloud bucket in association with the JSONL file.",
+        "summary": "Local images and JSONL file and puts images into bucket.",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "upload"
+        ]
+      },
+      "parameters": []
+    },
+    "/createmodel/{model_name}": {
+      "post": {
+        "operationId": "create_model",
+        "description": "Train a new model, deploy that same model, funnel all traffic to that new model, and delete previous model",
+        "summary": "Train/Deploy/Delete",
+        "parameters": [
+          {
+            "name": "model_name",
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "train"
+        ]
+      }
+    }
+  }
+}
